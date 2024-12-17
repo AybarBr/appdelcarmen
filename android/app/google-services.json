@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "342062525095",
+    "project_id": "appdelcarmen",
+    "storage_bucket": "appdelcarmen.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342062525095:android:84d0634c9f444991240982",
+        "android_client_info": {
+          "package_name": "com.example.appdelcarmen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGeMRIdKyb99-YLgVE0wMGl-AKZljgccQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
