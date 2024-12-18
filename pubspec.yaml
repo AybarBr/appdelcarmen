@@ -62,6 +62,14 @@ flutter:
   assets:
      - assets/images/hqdefault.jpg
      - assets/images/InShot_20230529_140724805-1024x683.jpg
+     - assets/images/plaza.jpg
+     - assets/images/iglesia.jpg
+     - assets/images/dique.jpg
+     - assets/images/balsamo.jpg
+     - assets/images/manolo.jpg
+     - assets/images/caporal.jpg
+     - assets/images/muni.jpg
+     - assets/images/menu.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
