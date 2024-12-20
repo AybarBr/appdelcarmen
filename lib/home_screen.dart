@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:ui'; // Necesario para BackdropFilter y blur
+import 'dart:ui';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
