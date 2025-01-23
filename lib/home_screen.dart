@@ -1,71 +1,39 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
+import 'dart:ui'; // Import necesario para ImageFilter
 
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
+void main() {
+  runApp(MyApp());
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomeScreen(),
+    );
+  }
+}
 
-  final List<Widget> _screens = [
-    HomeScreenContent(), // Contenido principal de la pantalla de inicio
-    //SearchScreen(), // Pantalla de búsqueda
-    //MapScreen(), // Pantalla del mapa
-    //ProfileScreen(), // Pantalla de perfil
-  ];
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF00695C), // Fondo Verde Oscuro
-      appBar: AppBar(
-        title: const Text(''),
-        backgroundColor: const Color(0xFF00695C), // Mismo color del fondo
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // Ajusta la altura según sea necesario
+        child: AppBar(
+          title: Center(
+            child: Image.asset(
+              'assets/images/logo_turismo.png',
+              height: 150, // Ajusta la altura según sea necesario
+            ),
+          ),
+          actions: [
+            IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+          ],
+        ),
       ),
-      drawer: _buildDrawer(context), // Menú desplegable a la izquierda
-      body: _screens[_currentIndex], // Cambia de pantalla según el índice
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Inicio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Buscar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Mapa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-        ],
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-      ),
-    );
-  }
-
-  // Método para construir el Drawer (menú lateral)
-  Widget _buildDrawer(BuildContext context) {
-    return Drawer(
-      child: Column(
+      drawer: Drawer(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DrawerHeader(
@@ -208,10 +176,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, '/remises_el_carmen');
                 },
               ),
-              // Añade más ListTile para otras farmacias aquí
+              // Añade más ListTile para otras remiserias aquí
             ],
           ),
-         ExpansionTile(
+          ExpansionTile(
             leading: const Icon(Icons.bus_alert_rounded, color: Color.fromARGB(255, 74, 195, 149)),
             title: const Text('Colectivos'),
             children: [
@@ -223,8 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, '/terminal_de_omnibus');
                 },
               ),
-              
-              // Añade más ListTile para otras farmacias aquí
+              // Añade más ListTile para otros colectivos aquí
             ],
           ),
           ListTile(
@@ -255,144 +222,156 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Buscar...',
+                  prefixIcon: Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+            children: [
+              SizedBox(height: 20), // Espacio entre la barra de búsqueda y el Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xFF00695C).withOpacity(0.2),
+                          child: Icon(Icons.calendar_today, color: Color(0xFF00695C), size: 30),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text("ReAgenda", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xFF00695C).withOpacity(0.2),
+                          child: Icon(Icons.explore, color: Color(0xFF00695C), size: 30),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text("ReBonaerense", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xFF00695C).withOpacity(0.2),
+                          child: Icon(Icons.map, color: Color(0xFF00695C), size: 30),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text("ReCaminos", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xFF00695C).withOpacity(0.2),
+                          child: Icon(Icons.directions_walk, color: Color(0xFF00695C), size: 30),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text("ReCircuitos", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+            Container(
+            height: 200.0,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                EventCard(
+                  title: 'Fiesta Nacional de la Diversidad Cultural',
+                  imageUrl: 'https://example.com/diversidad_cultural.jpg',
+                ),
+                EventCard(
+                  title: 'Fiesta Nacional del Caballo',
+                  imageUrl: 'https://example.com/fiesta_caballo.jpg',
+                ),
+              ],
+            ),
+          ),
+
+            ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                ListTile(
+                  title: Text('Fiesta Nacional de la Diversidad Cultural'),
+                  subtitle: Text('Villa Gesell - 08/10'),
+                ),
+                ListTile(
+                  title: Text('Fiesta Nacional del Caballo'),
+                  subtitle: Text('Bragado - 07/10 to 11/10'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Eventos'),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Mapas'),
+          BottomNavigationBarItem(icon: Icon(Icons.more), label: 'Más'),
+        ],
+      ),
     );
   }
 }
 
-// Contenido principal de HomeScreen
-class HomeScreenContent extends StatelessWidget {
+class EventCard extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+
+  EventCard({required this.title, required this.imageUrl});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 20), // Espacio superior
-        // Logo del municipio
-        Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100), // Borde redondeado
-            child: Image.asset(
-              'assets/images/muni.jpg',
-              height: 150,
-              width: 150,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        // Título de la app
-        const Text(
-          'Explora El Carmen',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 255, 255, 255), // Amarillo
-          ),
-        ),
-        const SizedBox(height: 20),
-        // Botones de navegación
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            children: [
-              _buildModernButton(
-                context,
-                'Lugares de Interés',
-                'assets/images/plaza.jpg',
-                () {
-                  Navigator.pushNamed(context, '/places');
-                },
-              ),
-              const SizedBox(height: 20),
-              _buildModernButton(
-                context,
-                'Gastronomía',
-                'assets/images/manolo.jpg',
-                () {
-                  Navigator.pushNamed(context, '/restaurants');
-                },
-              ),
-              const SizedBox(height: 20),
-              _buildModernButton(
-                context,
-                'Festivales',
-                'assets/images/recitales.jpg',
-                () {
-                  // Acción para Recitales
-                },
-              ),
-              const SizedBox(height: 20),
-              _buildModernButton(
-                context,
-                'Próximos Eventos',
-                'assets/images/eventos.jpg',
-                () {
-                  // Acción para Eventos
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Método para construir botones modernos con desenfoque
-  Widget _buildModernButton(
-    BuildContext context,
-    String text,
-    String imagePath,
-    VoidCallback onPressed,
-  ) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              offset: const Offset(0, 4),
-              blurRadius: 8,
-            ),
-          ],
-        ),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Imagen de fondo
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
-            ),
-            // Filtro de desenfoque
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1), // Ajusta el desenfoque aquí
-                child: Container(
-                  color: Colors.black.withOpacity(0.3), // Oscurece un poco el fondo
-                ),
-              ),
-            ),
-            // Texto centrado
-            Center(
-              child: Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
+    return Container(
+      width: 150.0,
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          Image.network(imageUrl, height: 100.0, width: 150.0, fit: BoxFit.cover),
+          SizedBox(height: 10.0),
+          Text(title, style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
