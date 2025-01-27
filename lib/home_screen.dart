@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart'; // Asegúrate de añadir este paquete en pubspec.yaml
 import 'dart:ui'; // Import necesario para ImageFilter
 
 void main() {
@@ -34,50 +35,48 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/menu.jpg'), // Ruta de la imagen
-                fit: BoxFit.cover, // La imagen cubre completamente el espacio
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/menu.jpg'), // Ruta de la imagen
+                  fit: BoxFit.cover, // La imagen cubre completamente el espacio
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2), // Ajusta el desenfoque
+                      child: Container(
+                        color: Colors.white.withOpacity(0), // Oscurece con opacidad
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Información Útil',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black54,
+                            offset: Offset(1, 1),
+                            blurRadius: 3,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: Stack(
-              children: [
-                // Filtro de difuminado
-                Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2), // Ajusta el desenfoque
-                    child: Container(
-                      color: const Color.fromARGB(255, 255, 255, 255)
-                          .withOpacity(0), // Oscurece con opacidad
-                    ),
-                  ),
-                ),
-                // Texto centrado
-                Center(
-                  child: Text(
-                    'Información Útil',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black54,
-                          offset: Offset(1, 1),
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ExpansionTile(
+            // Otros elementos del Drawer...
+            ExpansionTile(
             leading: const Icon(Icons.local_hospital, color: Color(0xFF8BC34A)),
             title: const Text('Farmacias'),
             children: [
@@ -176,10 +175,10 @@ class HomeScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/remises_el_carmen');
                 },
               ),
-              // Añade más ListTile para otras remiserias aquí
+              // Añade más ListTile para otras farmacias aquí
             ],
           ),
-          ExpansionTile(
+         ExpansionTile(
             leading: const Icon(Icons.bus_alert_rounded, color: Color.fromARGB(255, 74, 195, 149)),
             title: const Text('Colectivos'),
             children: [
@@ -191,14 +190,20 @@ class HomeScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/terminal_de_omnibus');
                 },
               ),
-              // Añade más ListTile para otros colectivos aquí
+              
+              // Añade más ListTile para otras farmacias aquí
             ],
           ),
           ListTile(
-            leading: const Icon(Icons.event, color: Colors.blueAccent),
-            title: const Text('Próximos Eventos'),
+            leading: const Icon(Icons.settings, color: Colors.blueAccent),
+            title: const Text('Ajustes'),
             onTap: () {
               // Acción para Eventos
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+
             },
           ),
           Divider(), // Separador visual
@@ -219,10 +224,10 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
-          ),
-        ],
+          )
+          ],
+        ),
       ),
-    ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -242,6 +247,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             Column(
             children: [
               SizedBox(height: 20), // Espacio entre la barra de búsqueda y el Row
@@ -259,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("ReAgenda", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                      Text("Agenda", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
                     ],
                   ),
                   Column(
@@ -273,7 +279,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("ReBonaerense", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                      Text("Lugares", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
                     ],
                   ),
                   Column(
@@ -287,7 +293,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("ReCaminos", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                      Text("Mapas", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
                     ],
                   ),
                   Column(
@@ -301,45 +307,109 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("ReCircuitos", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                      Text("Actividades", style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
                     ],
                   ),
                 ],
               ),
             ],
           ),
+ 
 
-            Container(
-            height: 200.0,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                EventCard(
-                  title: 'Fiesta Nacional de la Diversidad Cultural',
-                  imageUrl: 'https://example.com/diversidad_cultural.jpg',
-                ),
-                EventCard(
-                  title: 'Fiesta Nacional del Caballo',
-                  imageUrl: 'https://example.com/fiesta_caballo.jpg',
-                ),
-              ],
+            SizedBox(height: 20),
+            // Carrusel de imágenes
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 200.0,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                viewportFraction: 0.8,
+                aspectRatio: 16 / 9,
+                autoPlayInterval: Duration(seconds: 3),
+              ),
+              items: [
+                {
+                  "image": "assets/images/eventos.jpg",
+                  "title": "Festival de la Música",
+                  "subtitle": "25 de enero - Plaza Central",
+                },
+                {
+                  "image": "assets/images/recitales.jpg",
+                  "title": "Carnaval del Pueblo",
+                  "subtitle": "15 de febrero - Avenida Principal",
+                },
+                {
+                  "image": "assets/images/eventos.jpg",
+                  "title": "Feria Artesanal",
+                  "subtitle": "8 de marzo - Parque Cultural",
+                },
+              ].map((evento) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            evento['image']!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.black.withOpacity(0.6),
+                                Colors.transparent,
+                              ],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 20,
+                          left: 20,
+                          right: 20,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                evento['title']!,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black54,
+                                      offset: Offset(1, 1),
+                                      blurRadius: 3,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                evento['subtitle']!,
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
-          ),
-
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                ListTile(
-                  title: Text('Fiesta Nacional de la Diversidad Cultural'),
-                  subtitle: Text('Villa Gesell - 08/10'),
-                ),
-                ListTile(
-                  title: Text('Fiesta Nacional del Caballo'),
-                  subtitle: Text('Bragado - 07/10 to 11/10'),
-                ),
-              ],
-            ),
+            SizedBox(height: 20),
+            // Otros elementos de la pantalla
+            
           ],
         ),
       ),
@@ -355,22 +425,42 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class EventCard extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-
-  EventCard({required this.title, required this.imageUrl});
-
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150.0,
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('Ajustes'),
+      ),
+      body: ListView(
         children: [
-          Image.network(imageUrl, height: 100.0, width: 150.0, fit: BoxFit.cover),
-          SizedBox(height: 10.0),
-          Text(title, style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+          ListTile(
+            leading: Image.asset('assets/images/usa.png', width: 42, height: 42),
+            title: Text('Inglés'),
+            onTap: () {
+              // Lógica para cambiar al idioma inglés
+            },
+          ),
+          ListTile(
+            leading: Image.asset('assets/images/españa.png', width: 42, height: 42),
+            title: Text('Español'),
+            onTap: () {
+              // Lógica para cambiar al idioma español
+            },
+          ),
+          ListTile(
+            leading: Image.asset('assets/images/brasil.png', width: 42, height: 42),
+            title: Text('Portugués'),
+            onTap: () {
+              // Lógica para cambiar al idioma portugués
+            },
+          ),
         ],
       ),
     );
