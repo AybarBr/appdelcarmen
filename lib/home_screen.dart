@@ -409,7 +409,39 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             // Otros elementos de la pantalla
-            
+            // Botones rectangulares redondeados
+            Column(
+            children: [
+              _buildRoundedButton(
+                context,
+                'Gastronomía',
+                'assets/images/manolo.jpg',
+                () {
+                  Navigator.pushNamed(context, '/gastronomia');
+                },
+              ),
+              SizedBox(height: 20), // Espacio entre los botones
+              _buildRoundedButton(
+                context,
+                'Lugares',
+                'assets/images/plaza.jpg',
+                () {
+                  Navigator.pushNamed(context, '/lugares');
+                },
+              ),
+              SizedBox(height: 20), // Espacio entre los botones
+              _buildRoundedButton(
+                context,
+                'Alojamiento',
+                'assets/images/patio.jpg',
+                () {
+                  Navigator.pushNamed(context, '/hoteleria');
+                },
+              ),
+            ],
+          ),
+
+            SizedBox(height: 20), // Espacio adicional
           ],
         ),
       ),
@@ -465,4 +497,56 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildRoundedButton(BuildContext context, String title, String imagePath, VoidCallback onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 360,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.6),
+                  Colors.transparent,
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
+            ),
+          ),
+          Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(1, 1),
+                    blurRadius: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
